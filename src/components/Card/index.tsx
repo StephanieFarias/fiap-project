@@ -1,6 +1,6 @@
 import { IconType } from "react-icons"
 
-interface CardProps {
+export interface CardProps {
     text:string;
     Icon:IconType;
     className?:string;

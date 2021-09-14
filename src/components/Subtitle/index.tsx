@@ -1,4 +1,4 @@
-interface SubTitleProps {
+export interface SubTitleProps {
     text:string;
     color?:"primary" |"secondary";
 }
