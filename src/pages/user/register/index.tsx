@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { FormItem } from "../../../components/FormItem";
 import SelectBox from "../../../components/SelectBox";
 import Image from 'next/image';
+import { RadioButton } from "../../../components/RadioButton";
 
 export default function Register() {
   const [isLoading, setloading] = useState<boolean>(false);
@@ -19,6 +20,9 @@ export default function Register() {
       gender: "",
       phone: "",
       email: "",
+      password: "",
+      confirmPassword: "",
+      acceptedTerms: true,
     },
     validationSchema: Yup.object().shape({
       name: Yup.string().required("Insira seu nome"),
@@ -27,6 +31,12 @@ export default function Register() {
       phone: Yup.string().required("Insira seu telefone"),
       birthdate: Yup.string().required("Informe a data de nascimento"),
       gender: Yup.string().required("Selecione o sexo"),
+      password: Yup.string().required("Cadastre uma senha"),
+      confirmPassword: Yup.string().required("Confirme a senha").equals([
+        Yup.ref('password'),
+      ],
+      "A senha precisa ser a mesma digitada no campo anterior"),
+      acceptedTerms: Yup.boolean().required("Aceite os termos"),
     }),
     onSubmit: (values, { setFieldValue, setTouched }) => {},
   });
@@ -40,15 +50,15 @@ export default function Register() {
     <>
       <Header />
       <div className="container px-48 overflow-hidden bg-white">
-        <div className="flex flex-row items-center mt-12 text-sm font-semibold uppercase text-primary-400">
+        <div className="flex flex-row items-center mt-4 text-sm font-semibold uppercase text-primary-400">
           <IoIosArrowRoundBack className="text-2xl" />
           <p>voltar</p>
         </div>
-        <div className="flex flex-col mt-6">
+        <div className="flex flex-col mt-3">
           <SubTitle text="dados pessoais" color="secondary" />
           <div className="flex flex-row justify-between">
             <div className="w-full">
-              <div className="mt-6 space-y-5">
+              <div className="mt-6 space-y-3">
                 <FormItem title="Name" field="name" errors={formik.errors.name} setFieldValue={formik.setFieldValue} values={formik.values.name} touched={formik.touched.name} />
                 <div className="flex flex-row justify-between space-x-12">
                   <FormItem title="CPF" field="cpf" errors={formik.errors.cpf} setFieldValue={formik.setFieldValue} values={formik.values.cpf} touched={formik.touched.cpf} />
@@ -71,6 +81,14 @@ export default function Register() {
                   <FormItem title="Telefone" field="phone" errors={formik.errors.phone} setFieldValue={formik.setFieldValue} values={formik.values.phone} touched={formik.touched.phone} />
                 </div>
                 <FormItem title="E-mail" field="email" errors={formik.errors.email} setFieldValue={formik.setFieldValue} values={formik.values.email} touched={formik.touched.email} />
+                <div className="flex flex-col w-2/5 space-y-3">
+                  <FormItem title="Senha" field="password" errors={formik.errors.password} setFieldValue={formik.setFieldValue} values={formik.values.password} touched={formik.touched.password} />
+                  <FormItem title="Confirme a senha" field="confirmPassword" errors={formik.errors.confirmPassword} setFieldValue={formik.setFieldValue} values={formik.values.confirmPassword} touched={formik.touched.confirmPassword} />
+                </div>
+                <div className="flex flex-row items-center space-x-3">
+                  <RadioButton field="acceptedTerms" isChecked={formik.values.acceptedTerms} setFieldValue={formik.setFieldValue} />
+                  <p className="text-sm">Declaro que li e aceito os <span className="uppercase cursor-pointer text-ligthGreen-300">termos e condições</span></p>
+                </div>
               </div>
             </div>
             <div className="flex items-start pl-24">
@@ -92,7 +110,7 @@ export default function Register() {
             }}
             type="submit"
           >
-            <p>{!isLoading ? "Enviar" : "Enviando..."}</p>
+            <p>{!isLoading ? "Cadastrar" : "Enviando..."}</p>
           </button>
         </div>
       </div>

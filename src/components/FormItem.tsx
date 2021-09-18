@@ -16,7 +16,7 @@ export const FormItem = ({ title, errors, className, touched, values, field, set
       <p className="text-sm uppercase text-primary-400">{title}*</p>
       <input
         className={clsx(
-          `w-full py-1 bg-transparent outline-none border-transparent border-b-2 border-gray-600 ${className}`,
+          `w-full py-1 bg-transparent text-sm outline-none border-transparent border-b-2 border-gray-600 ${className}`,
           {}
         )}
         id={field}
