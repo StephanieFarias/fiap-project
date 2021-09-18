@@ -88,6 +88,9 @@ module.exports = {
           800: "#2d3748",
           900: "#1a202c",
         },
+        ligthGreen: {
+          300: "#00B1C9"
+        }
       },
       width: {
         fit: "fit-content",
