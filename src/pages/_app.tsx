@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
     <>
       <DefaultSeo
         titleTemplate={
-          router.route === "/" ? "Stephanie Farias" : "%s | Stephanie Farias"
+          router.route === "/" ? "Dr. Consulta" : "%s | Dr. Consulta"
         }
       />
       <GoogleFonts href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" />
