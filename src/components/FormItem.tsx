@@ -7,10 +7,11 @@ interface FormItemProps {
   values: any;
   field: string;
   className?: string;
+  type?:string;
   setFieldValue: (field: string, value: any) => void
 }
 
-export const FormItem = ({ title, errors, className, touched, values, field, setFieldValue }: FormItemProps) => {
+export const FormItem = ({ title, errors, className, touched, values, field, setFieldValue,type="text" }: FormItemProps) => {
   return (
     <div className="flex flex-col w-full space-y-1">
       <p className="text-sm uppercase text-primary-400">{title}*</p>
@@ -26,6 +27,7 @@ export const FormItem = ({ title, errors, className, touched, values, field, set
           const value = e.target.value;
           setFieldValue( field, value );
         }}
+        type={type}
       />
       {errors && touched && (
         <p className="text-sm font-light text-left text-red-500 ">

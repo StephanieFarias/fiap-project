@@ -1,9 +1,36 @@
+import React, { useState } from "react";
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import * as Yup from "yup";
+import { FiCalendar, FiClock } from 'react-icons/fi'
+import { Banner } from '../components/Banner'
+import { Card } from '../components/Card'
 import { Header } from '../components/Header'
+import { Jumbotron } from '../components/Jumbotron'
+import { Search } from '../components/Search'
+import { SubTitle } from '../components/Subtitle'
+import { useFormik } from 'formik'
+import { FormItem } from '../components/FormItem'
+import { Button } from "../components/Button";
+import { MenuMobile } from "../components/MenuMobile";
+
 
 
 const Home: NextPage = () => {
+  const [isLoading, setloading] = useState<boolean>(false);
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object().shape({
+      email: Yup.string().email("Email inválido").required("Insira seu email"),
+      password: Yup.string().required("Cadastre uma senha")
+    }),
+    onSubmit: (values, { setFieldValue, setTouched }) => {},
+  });
+
+
   return (
     <div >
       <Head>
@@ -13,6 +40,48 @@ const Home: NextPage = () => {
       </Head>
 
       <Header/>
+      <Jumbotron 
+        image="/images/doctor-with-mask.png" 
+        title="Prevenção á COVID-19"
+        description="Saiba quais os cuidados basicos"
+      />
+      <div className="my-6 mx-4 sm:mx-0 sm:px-36 sm:my-16">
+        <Search/>
+      </div>
+
+      <div className="px-5 sm:px-36">
+        <SubTitle text="Próximas Consultas"/>
+        <div className="flex justify-between my-3 sm:my-8">
+          <Card text="Ortopedista 25/05 15:00" Icon={FiClock}/>
+          <Card text="Agendar uma consulta" Icon={FiCalendar}/>
+        </div>
+      </div>
+
+      <div className="flex flex-col sm:flex-row px-5 sm:px-36">
+        <section id="blog" className="w-full sm:w-3/5" >
+          <SubTitle text="blog"/>
+          <div className="flex justify-between flex-wrap my-3 gap-5 sm:gap-10 sm:my-8">
+            <Banner text="Médicos" image="/images/banner.png"/>
+            <Banner text="Covid-19" image="/images/banner2.png"/>
+            <Banner text="Covid-19" image="/images/banner2.png"/>
+            <Banner text="Médicos" image="/images/banner.png"/>
+          </div>
+        </section>
+        <section id="login" className="w-full mb-20 sm:ml-10 sm:w-2/5 h-96 flex flex-col justify-between">
+          <SubTitle text="login"/>
+
+          <FormItem title="Email" field="email" errors={formik.errors.email} setFieldValue={formik.setFieldValue} values={formik.values.email} touched={formik.touched.email} />
+          <FormItem type="password" title="Senha" field="password" errors={formik.errors.password} setFieldValue={formik.setFieldValue} values={formik.values.password} touched={formik.touched.password} />
+          
+          <Button 
+            text="Entrar"  
+            handleSubmit={() =>{}}
+            theme="success"
+          />
+        </section>
+
+      </div>
+      <MenuMobile />
     </div>
 
   )
