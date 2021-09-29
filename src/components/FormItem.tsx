@@ -5,8 +5,8 @@ interface FormItemProps {
   errors: string | undefined;
   touched: boolean | undefined;
   values: any;
-  type?: string;
   field: string;
+  type?: string;
   className?: string;
   setFieldValue: (field: string, value: any) => void
 }
