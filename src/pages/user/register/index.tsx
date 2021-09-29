@@ -62,7 +62,7 @@ export default function Register() {
                 <FormItem title="Name" field="name" errors={formik.errors.name} setFieldValue={formik.setFieldValue} values={formik.values.name} touched={formik.touched.name} />
                 <div className="flex flex-row justify-between space-x-12">
                   <FormItem title="CPF" field="cpf" errors={formik.errors.cpf} setFieldValue={formik.setFieldValue} values={formik.values.cpf} touched={formik.touched.cpf} />
-                  <FormItem title="Data de nascimento" field="birthdate" errors={formik.errors.birthdate} setFieldValue={formik.setFieldValue} values={formik.values.birthdate} touched={formik.touched.birthdate} />
+                  <FormItem title="Data de nascimento" field="birthdate" type="date" errors={formik.errors.birthdate} setFieldValue={formik.setFieldValue} values={formik.values.birthdate} touched={formik.touched.birthdate} />
                 </div>
                 <div className="flex flex-row justify-between space-x-12">
                   <div className="flex flex-col w-3/5 space-y-1">
