@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { IoIosCheckmark } from "react-icons/io";
 
-interface RadioButton {
+export interface IRadioButtonProps {
   field: string;
   isChecked: boolean;
   setFieldValue: (field: string, value: any) => void;
@@ -11,7 +11,7 @@ export const RadioButton = ({
   field,
   isChecked,
   setFieldValue,
-}: RadioButton) => {
+}: IRadioButtonProps) => {
   return (
     <div
       className={clsx("border border-gray-600 rounded-md cursor-pointer", {

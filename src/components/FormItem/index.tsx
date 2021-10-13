@@ -1,6 +1,4 @@
-import clsx from "clsx";
-
-interface FormItemProps {
+export interface FormItemProps {
   title: string;
   errors: string | undefined;
   touched: boolean | undefined;
@@ -16,10 +14,8 @@ export const FormItem = ({ title, errors, className, touched, values, field, typ
     <div className="flex flex-col w-full space-y-1">
       <p className="text-sm uppercase text-primary-400">{title}*</p>
       <input
-        className={clsx(
-          `w-full py-1 bg-transparent text-sm outline-none border-transparent border-b-2 border-gray-600 ${className}`,
-          {}
-        )}
+        className={
+          `w-full py-1 bg-transparent text-sm outline-none border-transparent border-b-2 border-gray-600 ${className}`}
         type={type}
         id={field}
         name={field}

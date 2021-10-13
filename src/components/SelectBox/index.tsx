@@ -1,7 +1,7 @@
 import Select from 'react-select';
-import { IOption } from '../types/IOption';
+import { IOption } from '../../types/IOption';
 
-interface SelectBoxProps {
+export interface ISelectBoxProps {
   options: Array<IOption>;
   value: IOption;
   isDisabled?: boolean;
@@ -11,7 +11,7 @@ interface SelectBoxProps {
   isClearable?: boolean;
 }
 
-export default function SelectBox({
+export const SelectBox = ({
   options,
   field,
   value,
@@ -19,7 +19,7 @@ export default function SelectBox({
   setFieldValue,
   onComplete = () => {},
   isClearable = false,
-}: SelectBoxProps) {
+}: ISelectBoxProps) => {
   return (
     <Select
       isClearable={isClearable}
@@ -36,3 +36,5 @@ export default function SelectBox({
     />
   );
 }
+
+export default SelectBox;
