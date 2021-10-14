@@ -1,6 +1,6 @@
-import clsx from 'clsx';
+import clsx from "clsx";
 
-interface FormItemProps {
+export interface FormItemProps {
   title: string;
   errors: string | undefined;
   touched: boolean | undefined;
