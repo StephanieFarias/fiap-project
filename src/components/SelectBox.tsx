@@ -15,7 +15,7 @@ export default function SelectBox({
   options,
   field,
   value,
-  isDisabled,
+  isDisabled = false,
   setFieldValue,
   onComplete = () => {},
   isClearable = false,
