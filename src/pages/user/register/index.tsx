@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { useFormik, Field } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { IoIosArrowRoundBack, IoIosCamera } from 'react-icons/io';
 import { Header } from '../../../components/Header';
-import { SubTitle } from '../../../components/SubTitle';
+import { SubTitle } from '../../../components/Subtitle';
 import clsx from 'clsx';
 import { FormItem } from '../../../components/FormItem';
 import SelectBox from '../../../components/SelectBox';
 import Image from 'next/image';
 import { RadioButton } from '../../../components/RadioButton';
-import { validateCPF } from '../../../utils/validators';
 import { Patient } from '../../../services/patient';
 import { useRouter } from 'next/router';
 import { Auth, setToken } from '../../../services/auth';
+import { validationRules } from '../../../utils/formValidators';
+import { IPatient } from '../../../types/IPatient';
 
 export default function Register() {
   const router = useRouter();
@@ -31,64 +32,50 @@ export default function Register() {
       acceptedTerms: false,
     },
     validationSchema: Yup.object().shape({
-      nome: Yup.string().required('Campo obrigatório'),
-      username: Yup.string()
-        .email('Email inválido')
-        .required('Campo obrigatório'),
-      cpf: Yup.string()
-        .matches(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, 'Insira um CPF válido')
-        .test('validate-cpf', 'Insira um CPF válido', (value) => {
-          if (!value) {
-            return true;
-          }
-          return validateCPF(value);
-        })
-        .required('Campo obrigatório'),
-      phone: Yup.string()
-        .matches(
-          /^(?:(?:\+|00)?(55)\s?)?(?:(?:\(?[1-9][0-9]\)?)?\s?)?(?:((?:9\d|[2-9])\d{3})-?(\d{4}))$/,
-          'Insira um telefone válido'
-        )
-        .required('Campo obrigatório'),
-      dataNascimento: Yup.string().required('Campo obrigatório'),
-      gender: Yup.string().required('Campo obrigatório'),
-      password: Yup.string().required('Campo obrigatório'),
-      confirmPassword: Yup.string()
-        .required('Campo obrigatório')
-        .equals(
-          [Yup.ref('password')],
-          'A senha precisa ser a mesma digitada no campo anterior'
-        ),
-      acceptedTerms: Yup.boolean().isTrue(
-        'Você precisa ler e aceitar os termos'
-      ),
+      nome: validationRules.requiredString,
+      username: validationRules.email,
+      cpf: validationRules.requiredCpf,
+      phone: validationRules.RequiredPhone,
+      dataNascimento: validationRules.requiredString,
+      gender: validationRules.requiredString,
+      password: validationRules.requiredString,
+      confirmPassword: validationRules.confirmPassword,
+      acceptedTerms: validationRules.requiredTerms,
     }),
     onSubmit: (values, { setFieldValue, setTouched }) => {
       setLoading(true);
-      values.dataNascimento = new Date(values.dataNascimento)
-        .toISOString()
-        .substring(0, 16)
-        .replace('T', ' ');
+      const payload: IPatient = {
+        dataNascimento: new Date(values.dataNascimento).toISOString().substring(0, 16).replace('T', ' '),
+        acceptedTerms: values.acceptedTerms,
+        password: values.password,
+        cpf: values.cpf,
+        nome: values.nome,
+        sexo: values.gender,
+        username: values.username,
+        telefone: values.phone
+      }
       try {
         Patient.create({
-          ...values,
+          ...payload,
         })
           .then((res) => {
-            if (res.status === 200) {
-              console.log(res);
-              setToken(res.data.token);
+            if (res.status === 200 || res.status === 201) {
+              console.log(res.data);
+              setToken(res.data.token, res.data.codigo);
               setLoading(false);
               router.push('/');
               console.log('Paciente cadastrado com sucesso.'); // fazer um componente de toast para os feedbacks
             }
           })
           .catch((error) => {
+            setLoading(false);
             console.log('Erro ao criar paciente');
           })
           .finally(() => {
             setLoading(false);
           });
       } catch {
+        setLoading(false);
         console.log('Falha ao cadastrar paciente');
       }
     },
@@ -181,6 +168,7 @@ export default function Register() {
                     setFieldValue={formik.setFieldValue}
                     value={formik.values.password}
                     touched={formik.touched.password}
+                    type="password"
                   />
                   <FormItem
                     title="Confirme a senha"
@@ -189,6 +177,7 @@ export default function Register() {
                     setFieldValue={formik.setFieldValue}
                     value={formik.values.confirmPassword}
                     touched={formik.touched.confirmPassword}
+                    type="password"
                   />
                 </div>
                 <div className="flex flex-col">

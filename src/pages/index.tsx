@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import * as Yup from 'yup';
@@ -13,37 +13,38 @@ import { useFormik } from 'formik';
 import { FormItem } from '../components/FormItem';
 import { Button } from '../components/Button';
 import { MenuMobile } from '../components/MenuMobile';
-import { Auth, setToken } from '../services/auth';
+import { Auth, getToken, setToken } from '../services/auth';
 import { useRouter } from 'next/router';
 
 const Home: NextPage = () => {
   const router = useRouter();
+  const patient = getToken();
   const [isLoading, setLoading] = useState<boolean>(false);
+
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
     validationSchema: Yup.object().shape({
-      username: Yup.string().email('Email inválido').required('Insira seu email'),
+      username: Yup.string()
+        .email('Email inválido')
+        .required('Insira seu email'),
       password: Yup.string().required('Cadastre uma senha'),
     }),
-    onSubmit: (values, { setFieldValue, setTouched }) => {
+    onSubmit: async (values, { setFieldValue, setTouched }) => {
       setLoading(true);
       try {
-        Auth.login({
+        await Auth.login({
           username: values.username,
-          password: values.password
+          password: values.password,
         })
           .then((res) => {
-            if (res.status === 200) {
-              setToken(res.data.token);
+            if (res.status === 200 || res.status === 201) {
+              setToken(res.data.token, res.data.codigo);
               setLoading(false);
               router.push(`/${res.data.id}`);
             }
-          })
-          .catch((error) => {
-            console.log('Erro ao fazer login');
           })
           .finally(() => {
             setLoading(false);
@@ -114,7 +115,13 @@ const Home: NextPage = () => {
             touched={formik.touched.password}
           />
 
-          <Button text="Entrar" handleSubmit={() => {formik.handleSubmit()}} theme="success" />
+          <Button
+            text="Entrar"
+            handleSubmit={() => {
+              formik.handleSubmit();
+            }}
+            theme="success"
+          />
         </section>
       </div>
       <MenuMobile />
