@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Patient } from '../../services/patient';
 import { Header } from '../../components/Header';
 import { IoIosArrowRoundBack } from 'react-icons/io';
@@ -15,6 +15,7 @@ import Error from 'next/error';
 import { validationRules } from '../../utils/formValidators';
 import * as Yup from 'yup';
 import { IPatient } from '../../types/IPatient';
+import { MenuMobile } from '../../components/MenuMobile';
 
 interface patient {
   nome: string;
@@ -155,7 +156,7 @@ export default function User() {
           </Modal>
         )}
         <Header />
-        <div className="container px-48 overflow-hidden">
+        <div className="container px-10 overflow-hidden bg-white lg:px-48">
           <div
             className="flex flex-row items-center w-20 mt-6 text-sm font-semibold uppercase cursor-pointer text-primary-400"
             onClick={() => router.push('/')}
@@ -163,9 +164,9 @@ export default function User() {
             <IoIosArrowRoundBack className="text-2xl" />
             <p>voltar</p>
           </div>
-          <div className="flex flex-col mt-3">
+          <div className="flex flex-col mt-3 mb-24 lg:mb-0">
             <SubTitle text="dados pessoais" color="secondary" />
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-col-reverse justify-between mt-5 lg:flex-row lg:mt-0">
               <div className="w-full">
                 <div className="mt-6 space-y-3">
                   <FormItem
@@ -177,7 +178,7 @@ export default function User() {
                     touched={formik.touched.nome}
                     isDisabled={isDisableValue}
                   />
-                  <div className="flex flex-row justify-between space-x-12">
+                  <div className="flex flex-col justify-between space-y-3 lg:space-y-0 lg:space-x-12 lg:flex-row">
                     <FormItem
                       title="CPF"
                       field="cpf"
@@ -198,7 +199,7 @@ export default function User() {
                       isDisabled={isDisableValue}
                     />
                   </div>
-                  <div className="flex flex-row justify-between space-x-12">
+                  <div className="flex-col justify-between space-y-3 fflex lg:space-y-0 lg:space-x-12 lg:flex-row">
                     <div className="flex flex-col w-3/5 space-y-1">
                       <p className="text-sm uppercase text-primary-400">
                         Sexo*
@@ -238,7 +239,7 @@ export default function User() {
                   />
                   {!isDisableValue && (
                     <>
-                      <div className="flex flex-col w-2/5 space-y-3">
+                      <div className="flex flex-col space-y-3 lg:w-2/5">
                         <FormItem
                           title="Senha"
                           field="password"
@@ -295,7 +296,7 @@ export default function User() {
             </div>
             {isDisableValue ? (
               <>
-                <div className="flex items-center self-center justify-between w-1/4 text-lg underline uppercase text-ligthGreen-300">
+                <div className="flex items-center self-center justify-between space-x-5 text-base underline uppercase lg:space-x-0 lg:text-lg lg:w-1/4 text-ligthGreen-300">
                   <a
                     className="cursor-pointer"
                     onClick={() => setIsDisable(false)}
@@ -336,6 +337,7 @@ export default function User() {
             )}
           </div>
         </div>
+        <MenuMobile />
       </>
     );
   }

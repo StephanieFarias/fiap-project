@@ -19,7 +19,7 @@ export const Modal = ({ children, title, onClose, onConfirm }: IModalProps) => {
   return (
     <>
       <div className="absolute flex items-center justify-center w-full h-full mt-0 ml-0 bg-transparent">
-        <div className="p-4 rounded-md bg-opacity-95 bg-primary-400 w-96 h-72">
+        <div className="z-50 p-4 mx-10 rounded-md bg-opacity-95 bg-primary-400 w-96 h-72 lg:mx-0">
           <div className="flex flex-row justify-end text-2xl">
             <a href="#" onClick={handleCloseClick}>
               <FiX className="text-white"/>

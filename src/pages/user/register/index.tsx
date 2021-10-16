@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 import { Auth, setToken } from '../../../services/auth';
 import { validationRules } from '../../../utils/formValidators';
 import { IPatient } from '../../../types/IPatient';
+import { MenuMobile } from '../../../components/MenuMobile';
 
 export default function Register() {
   const router = useRouter();
@@ -86,7 +87,7 @@ export default function Register() {
   return (
     <>
       <Header />
-      <div className="container px-48 overflow-hidden bg-white">
+      <div className="container px-10 overflow-hidden bg-white lg:px-48">
         <div
           className="flex flex-row items-center w-20 mt-4 text-sm font-semibold uppercase cursor-pointer text-primary-400"
           onClick={() => router.push('/')}
@@ -94,9 +95,9 @@ export default function Register() {
           <IoIosArrowRoundBack className="text-2xl" />
           <p>voltar</p>
         </div>
-        <div className="flex flex-col mt-3">
+        <div className="flex flex-col mt-3 mb-24 lg:mb-0">
           <SubTitle text="dados pessoais" color="secondary" />
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-col-reverse justify-between mt-5 lg:flex-row lg:mt-0">
             <div className="w-full">
               <div className="mt-6 space-y-3">
                 <FormItem
@@ -107,7 +108,7 @@ export default function Register() {
                   value={formik.values.nome}
                   touched={formik.touched.nome}
                 />
-                <div className="flex flex-row justify-between space-x-12">
+                <div className="flex flex-col justify-between space-y-3 lg:space-y-0 lg:space-x-12 lg:flex-row">
                   <FormItem
                     title="CPF"
                     field="cpf"
@@ -126,7 +127,7 @@ export default function Register() {
                     touched={formik.touched.dataNascimento}
                   />
                 </div>
-                <div className="flex flex-row justify-between space-x-12">
+                <div className="flex flex-col justify-between space-y-3 lg:space-y-0 lg:space-x-12 lg:flex-row">
                   <div className="flex flex-col w-3/5 space-y-1">
                     <p className="text-sm uppercase text-primary-400">Sexo*</p>
                     <SelectBox
@@ -160,7 +161,7 @@ export default function Register() {
                   value={formik.values.username}
                   touched={formik.touched.username}
                 />
-                <div className="flex flex-col w-2/5 space-y-3">
+                <div className="flex flex-col space-y-3 lg:w-2/5">
                   <FormItem
                     title="Senha"
                     field="password"
@@ -212,7 +213,7 @@ export default function Register() {
                   height={130}
                   className="relative rounded-full"
                 />
-                <div className="fixed self-end p-1 ml-16 rounded-full bg-primary-400">
+                <div className="absolute p-1 ml-20 rounded-full lg:ml-16 lg:self-end lg:fixed bg-primary-400">
                   <IoIosCamera className="text-lg text-white" />
                 </div>
               </div>
@@ -220,7 +221,7 @@ export default function Register() {
           </div>
           <button
             className={clsx(
-              'flex items-center justify-center w-1/5 self-center px-3 py-1 mt-10 space-x-2 font-bold text-primary-400 border rounded-full text-md border-primary-400 bg-primary-100',
+              'flex items-center justify-center lg:w-1/5 self-center px-6 lg:px-3 py-1 mt-10 space-x-2 font-bold text-primary-400 border rounded-full text-md border-primary-400 bg-primary-100',
               {}
             )}
             onClick={() => {
@@ -232,6 +233,7 @@ export default function Register() {
           </button>
         </div>
       </div>
+      <MenuMobile />
     </>
   );
 }
