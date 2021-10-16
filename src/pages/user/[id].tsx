@@ -16,6 +16,7 @@ import { validationRules } from '../../utils/formValidators';
 import * as Yup from 'yup';
 import { IPatient } from '../../types/IPatient';
 import { MenuMobile } from '../../components/MenuMobile';
+import { useToasts } from 'react-toast-notifications';
 
 interface patient {
   nome: string;
@@ -34,6 +35,7 @@ export default function User() {
   const [isDisableValue, setIsDisable] = useState<boolean>(true);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [showModal, setShowModal] = useState(false);
+  const { addToast } = useToasts();
 
   const onConfirmModal = () => {
     try {
@@ -41,22 +43,23 @@ export default function User() {
         .then((res) => {
           if (res.status === 200 || res.status === 201) {
             setLoading(false);
+            setShowModal(false);
             router.push('/');
-            console.log('Paciente excluído com sucesso.'); // fazer um componente de toast para os feedbacks
+            addToast('Paciente excluído com sucesso.', { appearance: 'success' });
           }
         })
         .catch((error) => {
           setLoading(false);
-          console.log('Erro ao excluir paciente');
+          addToast('Erro ao excluir paciente', { appearance: 'error' });
         })
         .finally(() => {
           setLoading(false);
         });
     } catch {
       setLoading(false);
-      console.log('Falha ao excluir paciente');
+      addToast('Falha ao excluir paciente', { appearance: 'error' });
     }
-  }
+  };
 
   const fetchUser = (v: any) => {
     Patient.getById(v)
@@ -118,19 +121,19 @@ export default function User() {
             if (res.status === 200 || res.status === 201) {
               setLoading(false);
               router.reload();
-              console.log('Paciente editado com sucesso.'); // fazer um componente de toast para os feedbacks
+              addToast('Paciente editado com sucesso.', { appearance: 'success' });
             }
           })
           .catch((error) => {
             setLoading(false);
-            console.log('Erro ao editar paciente');
+            addToast('Erro ao editar paciente', { appearance: 'error' });
           })
           .finally(() => {
             setLoading(false);
           });
       } catch {
         setLoading(false);
-        console.log('Falha ao editar paciente');
+        addToast('Falha ao editar paciente', { appearance: 'error' });
       }
     },
   });
@@ -303,7 +306,10 @@ export default function User() {
                   >
                     editar
                   </a>
-                  <a className="cursor-pointer" onClick={() => setShowModal(true)}>
+                  <a
+                    className="cursor-pointer"
+                    onClick={() => setShowModal(true)}
+                  >
                     excluir conta
                   </a>
                 </div>

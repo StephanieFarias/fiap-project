@@ -15,10 +15,12 @@ import { Auth, setToken } from '../../../services/auth';
 import { validationRules } from '../../../utils/formValidators';
 import { IPatient } from '../../../types/IPatient';
 import { MenuMobile } from '../../../components/MenuMobile';
+import { useToasts } from 'react-toast-notifications';
 
 export default function Register() {
   const router = useRouter();
   const [isLoading, setLoading] = useState<boolean>(false);
+  const { addToast } = useToasts();
 
   const formik = useFormik({
     initialValues: {
@@ -65,19 +67,19 @@ export default function Register() {
               setToken(res.data.token, res.data.codigo);
               setLoading(false);
               router.push(`/user/${res.data.codigo}`);
-              console.log('Paciente cadastrado com sucesso.'); // fazer um componente de toast para os feedbacks
+              addToast('Paciente cadastrado com sucesso.', { appearance: 'success' });
             }
           })
           .catch((error) => {
             setLoading(false);
-            console.log('Erro ao criar paciente');
+            addToast('Erro ao criar paciente', { appearance: 'error' });
           })
           .finally(() => {
             setLoading(false);
           });
       } catch {
         setLoading(false);
-        console.log('Falha ao cadastrar paciente');
+        addToast('Falha ao cadastrar paciente', { appearance: 'error' });
       }
     },
   });
