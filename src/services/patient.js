@@ -5,5 +5,5 @@ export const Patient = {
   getById: (id) => api.get(id ? `/api/paciente/${id}` : null, fetcher),
   create: (payload) => api.post(`/api/paciente`, payload),
   edit: (id, payload) => api.put(`/api/paciente/${id}`, payload),
-  deactivate: (id) => api.delete(`/api/paciente/${id}`),
+  deactivate: (id) => api.delete(`/api/paciente/deletar/${id}`),
 };

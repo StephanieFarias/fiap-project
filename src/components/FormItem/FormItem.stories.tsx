@@ -19,7 +19,7 @@ Default.args = {
   title: "Titulo",
   errors: "errors",
   touched: true,
-  values: "values",
+  value: "value",
   field: "email",
   type: "email",
   className: "className",

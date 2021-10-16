@@ -122,6 +122,8 @@ const Home: NextPage = () => {
             }}
             theme="success"
           />
+
+          <a className="w-full text-lg font-semibold cursor-pointer text-primary-400" onClick={() => router.push('/user/register')}>Cadastre-se</a>
         </section>
       </div>
       <MenuMobile />
