@@ -5,6 +5,8 @@ import { getPatientId } from '../../services/auth';
 
 export const Header = () => {
   const router = useRouter();
+  const id = getPatientId();
+
   const user = {
     name: 'mock-name',
     avatar: '/images/mock-avatar.jpg',
@@ -23,14 +25,16 @@ export const Header = () => {
           className="cursor-pointer"
         />
 
-        {user.avatar && (
+        {id && (
           <Image
             src={user.avatar}
             alt={user.name}
             width={52}
             height={52}
             className="rounded-full cursor-pointer"
-            onClick={() => router.push(`/user/${getPatientId()}`)}
+            onClick={() => {              
+              id && router.push(`/user/${getPatientId()}`);
+            }}
           />
         )}
       </header>
