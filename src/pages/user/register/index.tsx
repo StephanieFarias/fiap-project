@@ -63,7 +63,7 @@ export default function Register() {
               console.log(res.data);
               setToken(res.data.token, res.data.codigo);
               setLoading(false);
-              router.push('/');
+              router.push(`/user/${res.data.codigo}`);
               console.log('Paciente cadastrado com sucesso.'); // fazer um componente de toast para os feedbacks
             }
           })
