@@ -199,7 +199,7 @@ export default function User() {
                       isDisabled={isDisableValue}
                     />
                   </div>
-                  <div className="flex-col justify-between space-y-3 fflex lg:space-y-0 lg:space-x-12 lg:flex-row">
+                  <div className="flex flex-col justify-between space-y-3 lg:space-y-0 lg:space-x-12 lg:flex-row">
                     <div className="flex flex-col w-3/5 space-y-1">
                       <p className="text-sm uppercase text-primary-400">
                         Sexo*
